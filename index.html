@@ -1,1 +1,33 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Счастливый Чизкейк</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор Калорий</h1>
+        <input type="text" id="productName" placeholder="Название продукта">
+        <input type="number" id="productWeight" placeholder="Граммы">
+        <button id="addButton">Добавить</button>
+
+        <h2>Итог:</h2>
+        <div id="result"></div>
+
+        <h3>Данные о сне</h3>
+        <input type="time" id="sleepStart" placeholder="Во сколько легли">
+        <input type="time" id="sleepEnd" placeholder="Во сколько встали">
+        <button id="sleepButton">Записать сон</button>
+        
+        <h3>Психоэмоциональное состояние</h3>
+        <textarea id="moodInput" placeholder="Как вы себя чувствуете?"></textarea>
+        <button id="moodButton">Записать настроение</button>
+
+        <div id="moodResult"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

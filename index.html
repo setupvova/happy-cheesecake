@@ -6,13 +6,28 @@
     <title>Калькулятор Калорий</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Добавьте свои стили здесь */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Высота на весь экран */
+            margin: 0; /* Убираем отступы по умолчанию */
+            font-family: Arial, sans-serif; /* Шрифт для всего документа */
+        }
+        h1, h2, h3 {
+            text-align: center; /* Выравниваем заголовки по центру */
+        }
         .emoji {
             font-size: 24px;
             cursor: pointer;
+            margin: 5px; /* Добавляем отступы между эмодзи */
         }
         .emoji:hover {
             transform: scale(1.2);
+        }
+        input, button {
+            margin: 10px; /* Добавляем отступы между элементами формы */
         }
     </style>
 </head>
@@ -45,6 +60,50 @@
     <h3>Ваши ответы:</h3>
     <ul id="moodList"></ul>
 
-    <script src="script.js"></script>
+    <script>
+        let totalCalories = 0;
+
+        function addProduct() {
+            const productName = document.getElementById("productName").value;
+            const productWeight = parseFloat(document.getElementById("productWeight").value);
+
+            if (productName && !isNaN(productWeight)) {
+                // Предположим, что 1 грамм продукта содержит 4 калории
+                const calories = productWeight * 4;
+                totalCalories += calories;
+
+                document.getElementById("totalCalories").innerText = totalCalories;
+                
+                // Очистить поля ввода
+                document.getElementById("productName").value = '';
+                document.getElementById("productWeight").value = '';
+            } else {
+                alert("Пожалуйста, введите корректные данные.");
+            }
+        }
+
+        function recordSleep() {
+            const sleepStart = document.getElementById("sleepStart").value;
+            const sleepEnd = document.getElementById("sleepEnd").value;
+
+            if (sleepStart && sleepEnd) {
+                // Здесь можно добавить логику для обработки времени сна
+                alert(`Сон записан с ${sleepStart} до ${sleepEnd}`);
+                
+                // Очистить поля ввода
+                document.getElementById("sleepStart").value = '';
+                document.getElementById("sleepEnd").value = '';
+            } else {
+                alert("Пожалуйста, введите корректные данные о сне.");
+            }
+        }
+
+        function recordMood(mood) {
+            const moodList = document.getElementById("moodList");
+            const listItem = document.createElement("li");
+            listItem.textContent = mood;
+            moodList.appendChild(listItem);
+        }
+    </script>
 </body>
 </html>

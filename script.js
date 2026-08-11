@@ -1,54 +1,85 @@
-let totalCalories = 0;
+const products = {
+    "Яблоко": 52,
+    "Банан": 89,
+    "Куриная грудка": 165,
+    "Говядина": 250,
+    "Рис": 130,
+    "Хлеб": 265,
+    "Картофель": 77,
+    "Молоко": 42,
+    "Яйцо": 155
+};
 
-document.getElementById("addButton").addEventListener("click", function() {
+let totalCalories = 0;
+let sleepData = [];
+let moodData = [];
+
+function addProduct() {
     const productName = document.getElementById("productName").value;
     const productWeight = parseFloat(document.getElementById("productWeight").value);
-
-    if (productName && productWeight) {
-        // Здесь можно добавить логику для подсчета калорий на основе продукта
-        const caloriesPer100g = 100; // Пример, замените на реальное значение
-        const calories = (caloriesPer100g * productWeight) / 100;
-
+    
+    if (products[productName]) {
+        const calories = (products[productName] * productWeight) / 100;
         totalCalories += calories;
-
-        document.getElementById("result").innerText = `Общие калории: ${totalCalories.toFixed(2)} ккал`;
+        document.getElementById("totalCalories").innerText = totalCalories.toFixed(2);
         
-        // Очистить поля ввода
+        // Очистка полей ввода
         document.getElementById("productName").value = '';
         document.getElementById("productWeight").value = '';
     } else {
-        alert("Пожалуйста, введите название продукта и вес.");
+        alert("Продукт не найден!");
     }
-});
+}
 
-document.getElementById("sleepButton").addEventListener("click", function() {
-    const sleepStart = document.getElementById("sleepStart").value;
-    const sleepEnd = document.getElementById("sleepEnd").value;
-
-    if (sleepStart && sleepEnd) {
-        const startTime = new Date(`1970-01-01T${sleepStart}:00`);
-        const endTime = new Date(`1970-01-01T${sleepEnd}:00`);
-        const sleepDuration = (endTime - startTime) / (1000 * 60 * 60); // в часах
-
-        alert(`Вы спали ${sleepDuration} часов`);
+function recordSleep() {
+    const start = new Date(document.getElementById("sleepStart").value);
+    const end = new Date(document.getElementById("sleepEnd").value);
+    
+    if (end > start) {
+        const hours = (end - start) / (1000 * 60 * 60);
+        sleepData.push(hours);
+        drawSleepChart();
         
-        // Очистить поля ввода
+        // Очистка полей ввода
         document.getElementById("sleepStart").value = '';
         document.getElementById("sleepEnd").value = '';
     } else {
-        alert("Пожалуйста, укажите время сна.");
+        alert("Время окончания должно быть позже времени начала.");
     }
-});
+}
 
-document.getElementById("moodButton").addEventListener("click", function() {
-    const moodInput = document.getElementById("moodInput").value;
+function drawSleepChart() {
+    const ctx = document.getElementById('sleepChart').getContext('2d');
+    
+    const labels = sleepData.map((_, index) => `День ${index + 1}`);
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Часы сна',
+                data: sleepData,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
-    if (moodInput) {
-        document.getElementById("moodResult").innerText = `Ваше настроение: ${moodInput}`;
-        
-        // Очистить поле ввода
-        document.getElementById("moodInput").value = '';
-    } else {
-        alert("Пожалуйста, опишите свое настроение.");
-    }
-});
+function recordMood(mood) {
+    moodData.push(mood);
+    
+    const moodList = document.getElementById("moodList");
+    const listItem = document.createElement("li");
+    listItem.innerText = mood;
+    moodList.appendChild(listItem);
+}

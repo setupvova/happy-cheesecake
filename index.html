@@ -1,33 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Счастливый Чизкейк</title>
+    <title>Калькулятор Калорий</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Добавьте свои стили здесь */
+        .emoji {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .emoji:hover {
+            transform: scale(1.2);
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Калькулятор Калорий</h1>
-        <input type="text" id="productName" placeholder="Название продукта">
-        <input type="number" id="productWeight" placeholder="Граммы">
-        <button id="addButton">Добавить</button>
+    <h1>Калькулятор Калорий</h1>
+    
+    <h2>Добавить продукт</h2>
+    <input type="text" id="productName" placeholder="Название продукта">
+    <input type="number" id="productWeight" placeholder="Граммы">
+    <button onclick="addProduct()">Добавить</button>
+    
+    <h2>Общая калорийность: <span id="totalCalories">0</span> ккал</h2>
 
-        <h2>Итог:</h2>
-        <div id="result"></div>
+    <h2>Запись времени сна</h2>
+    <input type="datetime-local" id="sleepStart">
+    <input type="datetime-local" id="sleepEnd">
+    <button onclick="recordSleep()">Записать сон</button>
+    
+    <canvas id="sleepChart" width="400" height="200"></canvas>
 
-        <h3>Данные о сне</h3>
-        <input type="time" id="sleepStart" placeholder="Во сколько легли">
-        <input type="time" id="sleepEnd" placeholder="Во сколько встали">
-        <button id="sleepButton">Записать сон</button>
-        
-        <h3>Психоэмоциональное состояние</h3>
-        <textarea id="moodInput" placeholder="Как вы себя чувствуете?"></textarea>
-        <button id="moodButton">Записать настроение</button>
-
-        <div id="moodResult"></div>
+    <h2>Психоэмоциональное состояние</h2>
+    <div>
+        <span class="emoji" onclick="recordMood('😊')">😊</span>
+        <span class="emoji" onclick="recordMood('😐')">😐</span>
+        <span class="emoji" onclick="recordMood('😞')">😞</span>
+        <span class="emoji" onclick="recordMood('😡')">😡</span>
+        <span class="emoji" onclick="recordMood('😂')">😂</span>
     </div>
+    
+    <h3>Ваши ответы:</h3>
+    <ul id="moodList"></ul>
+
     <script src="script.js"></script>
 </body>
 </html>
